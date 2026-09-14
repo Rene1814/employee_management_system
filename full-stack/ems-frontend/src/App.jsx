@@ -1,8 +1,9 @@
+import ListEmployeeComponent from "./components/ListEmployeeComponent"
 
 function App() {
   return (
     <>
-    
+      <ListEmployeeComponent />
     </>
   )
 }
