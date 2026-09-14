@@ -3,6 +3,7 @@ import ListEmployeeComponent from "./components/ListEmployeeComponent"
 import "../src/assets/styles.css"
 import FooterComponent from "./components/FooterComponent"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import EmployeeComponent from "./components/EmployeeComponent"
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <Route path="/" element={<ListEmployeeComponent />} />
         {/* // http://localhost:5173/employees */}
         <Route path="/employees" element={<ListEmployeeComponent />} />
+        {/* // http://localhost:5173/add-employee */}
+        <Route path="/add-employee" element={<EmployeeComponent />} />
       </Routes>
       <FooterComponent />
     </BrowserRouter>
