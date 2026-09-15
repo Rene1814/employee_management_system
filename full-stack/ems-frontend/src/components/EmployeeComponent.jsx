@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { createEmployee } from "./services/EmployeeService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EmployeeComponent = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const navigator = useNavigate();
+
+  const { id } = useParams(); // Get the employee ID from the URL if editing
 
   const [errors, setErrors] = useState({
     firstName: "",
@@ -52,12 +54,20 @@ const EmployeeComponent = () => {
     return valid;
   }
 
+  function pageTitle() {
+    if (id) {
+      return <h2 className="text-center">Update Employee</h2>;
+    } else {
+      return <h2 className="text-center">Add Employee</h2>;
+    }
+  }
+
   return (
     <div className="container">
       <br /> <br />
       <div className="row">
         <div className="card col-md-6 offset-md-3 offset-md-3">
-          <h2 className="text-center">Add Employee</h2>
+          {pageTitle()}
           <div className="card-body">
             <form>
               <div className="form-group mb-2">
@@ -70,7 +80,9 @@ const EmployeeComponent = () => {
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                 />
-                {errors.firstName && <div className="invalid-feedback">{errors.firstName}</div>}
+                {errors.firstName && (
+                  <div className="invalid-feedback">{errors.firstName}</div>
+                )}
               </div>
               <div className="form-group mb-2">
                 <label className="form-label">Last Name</label>
@@ -82,7 +94,9 @@ const EmployeeComponent = () => {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 />
-                {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
+                {errors.lastName && (
+                  <div className="invalid-feedback">{errors.lastName}</div>
+                )}
               </div>
               <div className="form-group mb-2">
                 <label className="form-label">Email</label>
@@ -94,7 +108,9 @@ const EmployeeComponent = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                {errors.email && (
+                  <div className="invalid-feedback">{errors.email}</div>
+                )}
               </div>
               <button className="btn btn-success" onClick={saveEmployee}>
                 Submit
