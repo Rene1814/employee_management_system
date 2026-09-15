@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { createEmployee } from "./services/EmployeeService";
+import { useState, useEffect } from "react";
+import { createEmployee, getEmployeeById } from "./services/EmployeeService";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EmployeeComponent = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const navigator = useNavigate();
 
   const { id } = useParams(); // Get the employee ID from the URL if editing
 
@@ -15,6 +14,22 @@ const EmployeeComponent = () => {
     lastName: "",
     email: "",
   });
+
+  const navigator = useNavigate();
+
+  useEffect(() => {
+    if (id) {
+      getEmployeeById(id)
+        .then((response) => {
+          setFirstName(response.data.firstName);
+          setLastName(response.data.lastName);
+          setEmail(response.data.email);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [id]);
 
   function saveEmployee(e) {
     e.preventDefault();
